@@ -70,7 +70,7 @@ const Home: NextPage<Props> = (props: Props) => {
 		};
 
 		checkAuth();
-	});
+	}, []);
 
 	const handleLogout = async () => {
 		const response = await fetch(

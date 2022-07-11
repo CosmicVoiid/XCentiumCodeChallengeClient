@@ -100,7 +100,7 @@ const Login: NextPage = () => {
 		};
 
 		checkAuth();
-	});
+	}, []);
 
 	// send api a post request to log in
 	const handleSubmit = async () => {
