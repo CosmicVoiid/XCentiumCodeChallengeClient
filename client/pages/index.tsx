@@ -45,6 +45,7 @@ const Home: NextPage<Props> = (props: Props) => {
 	// handle log out and redirect
 
 	const [isUser, setIsUser] = useState<boolean>(false);
+	const [name, setName] = useState<string>("");
 
 	useEffect(() => {
 		const checkAuth = async () => {
@@ -61,6 +62,7 @@ const Home: NextPage<Props> = (props: Props) => {
 
 				// return user's name if jwt auth is successful
 				setIsUser(true);
+				setName(response.data.user);
 			} catch {
 				// redirect to log in page if jwt auth is unsuccessful
 				Router.push("/login");
