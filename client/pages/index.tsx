@@ -61,8 +61,8 @@ const Home: NextPage<Props> = (props: Props) => {
 				);
 
 				// return user's name if jwt auth is successful
-				setIsUser(true);
 				setName(response.data.user);
+				setIsUser(true);
 			} catch {
 				// redirect to log in page if jwt auth is unsuccessful
 				Router.push("/login");
