@@ -75,10 +75,11 @@ const Login: NextPage = () => {
 	useEffect(() => {
 		const checkAuth = async () => {
 			try {
-				const response = await axios.get(
+				const response = await fetch(
 					process.env.NEXT_PUBLIC_SERVER_URL! + "/account/user",
 					{
-						withCredentials: true,
+						method: "GET",
+						credentials: "include",
 						headers: {
 							"Content-Type": "application/json",
 						},
