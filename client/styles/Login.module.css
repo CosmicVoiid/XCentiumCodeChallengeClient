@@ -55,7 +55,10 @@
 
 .btn:hover {
     cursor: pointer;
-    background-color: grey;
+}
+
+.btn:disabled {
+  background-color: grey;
 }
   
 .errorMessage {

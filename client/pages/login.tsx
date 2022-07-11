@@ -156,6 +156,7 @@ const Login: NextPage = () => {
 									Username
 								</label>
 								<input
+									required
 									className={styles.textInput}
 									type="text"
 									id="username"
@@ -174,6 +175,7 @@ const Login: NextPage = () => {
 									Password
 								</label>
 								<input
+									required
 									className={styles.textInput}
 									type="password"
 									id="password"
