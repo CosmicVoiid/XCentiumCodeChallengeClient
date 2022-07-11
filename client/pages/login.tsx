@@ -58,6 +58,7 @@ const validate = (values: Values) => {
 
 const Login: NextPage = () => {
 	const [errorMessage, setErrorMessage] = useState<string>("");
+	const [isUser, setIsUser] = useState<boolean>(true);
 
 	// formik set up
 	const formik = useFormik({
@@ -88,6 +89,7 @@ const Login: NextPage = () => {
 				Router.push("/");
 			} catch {
 				// redirect to log in page if jwt auth is unsuccessful
+				setIsUser(false);
 				return;
 			}
 		};
@@ -133,71 +135,74 @@ const Login: NextPage = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
-			<main className={styles.main}>
-				<Image
-					src="/logo.svg"
-					alt="XCentium Logo"
-					width={200}
-					height={100}
-				></Image>
-				<div className={styles.mainContainer}>
-					<h1 className={styles.header}>Log In</h1>
-					<div className={styles.formContainer}>
-						<form className={styles.form} onSubmit={formik.handleSubmit}>
-							<label className={styles.label} htmlFor="username">
-								Username
-							</label>
-							<input
-								className={styles.textInput}
-								type="text"
-								id="username"
-								name="username"
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								value={formik.values.username}
-							/>
-							{formik.touched.username && formik.errors.username ? (
-								<div className={styles.errorMessage}>
-									{formik.errors.username}
-								</div>
-							) : null}
+			{!isUser && (
+				<main className={styles.main}>
+					<Image
+						src="/logo.svg"
+						alt="XCentium Logo"
+						width={200}
+						height={100}
+					></Image>
+					<div className={styles.mainContainer}>
+						<h1 className={styles.header}>Log In</h1>
+						<div className={styles.formContainer}>
+							<form className={styles.form} onSubmit={formik.handleSubmit}>
+								<label className={styles.label} htmlFor="username">
+									Username
+								</label>
+								<input
+									className={styles.textInput}
+									type="text"
+									id="username"
+									name="username"
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									value={formik.values.username}
+								/>
+								{formik.touched.username && formik.errors.username ? (
+									<div className={styles.errorMessage}>
+										{formik.errors.username}
+									</div>
+								) : null}
 
-							<label className={styles.label} htmlFor="password">
-								Password
-							</label>
-							<input
-								className={styles.textInput}
-								type="password"
-								id="password"
-								name="password"
-								onChange={formik.handleChange}
-								onBlur={formik.handleBlur}
-								value={formik.values.password}
-							/>
-							{formik.touched.password && formik.errors.password ? (
-								<div className={styles.errorMessage}>
-									{formik.errors.password}
-								</div>
-							) : null}
+								<label className={styles.label} htmlFor="password">
+									Password
+								</label>
+								<input
+									className={styles.textInput}
+									type="password"
+									id="password"
+									name="password"
+									onChange={formik.handleChange}
+									onBlur={formik.handleBlur}
+									value={formik.values.password}
+								/>
+								{formik.touched.password && formik.errors.password ? (
+									<div className={styles.errorMessage}>
+										{formik.errors.password}
+									</div>
+								) : null}
 
-							{errorMessage.length !== 0 && (
-								<div className={styles.errorMessage}>{errorMessage}</div>
-							)}
+								{errorMessage.length !== 0 && (
+									<div className={styles.errorMessage}>{errorMessage}</div>
+								)}
 
-							<button
-								className={styles.btn}
-								type="submit"
-								disabled={
-									formik.values.username.length === 0 ||
-									formik.values.password.length === 0
-								}
-							>
-								Log In
-							</button>
-						</form>
+								<button
+									className={styles.btn}
+									type="submit"
+									disabled={
+										formik.values.username.length === 0 ||
+										formik.values.password.length === 0
+									}
+								>
+									Log In
+								</button>
+							</form>
+						</div>
 					</div>
-				</div>
-			</main>
+				</main>
+			)}
+			{isUser && <div></div>}
 		</div>
 	);
 };
