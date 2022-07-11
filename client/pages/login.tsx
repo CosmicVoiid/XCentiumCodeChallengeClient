@@ -86,7 +86,11 @@ const Login: NextPage = () => {
 				);
 
 				// return user's name if jwt auth is successful
-				Router.push("/");
+				if (response.status === 200) {
+					Router.push("/");
+				} else {
+					setIsUser(false);
+				}
 			} catch {
 				// redirect to log in page if jwt auth is unsuccessful
 				setIsUser(false);
