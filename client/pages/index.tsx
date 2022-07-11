@@ -110,7 +110,7 @@ const Home: NextPage<Props> = (props: Props) => {
 								Log Out
 							</button>
 						</div>
-						<h1>Welcome {props.fullName}!</h1>
+						<h1>Welcome {name}!</h1>
 						<Image
 							className={styles.hero}
 							src="/dog.jpg"
