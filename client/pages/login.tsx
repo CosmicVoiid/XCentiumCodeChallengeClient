@@ -1,6 +1,6 @@
 import type { NextPage, GetServerSideProps } from "next";
 import Router from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
 import Image from "next/image";
@@ -8,30 +8,30 @@ import styles from "../styles/Login.module.css";
 import { useFormik } from "formik";
 
 // checks if user is already logged in
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-	try {
-		await axios.get(process.env.NEXT_PUBLIC_SERVER_URL! + "/account/user", {
-			withCredentials: true,
-			headers: {
-				"Content-Type": "application/json",
-				Cookie: `${req.headers.cookie}`,
-			},
-		});
+// export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+// 	try {
+// 		await axios.get(process.env.NEXT_PUBLIC_SERVER_URL! + "/account/user", {
+// 			withCredentials: true,
+// 			headers: {
+// 				"Content-Type": "application/json",
+// 				Cookie: `${req.headers.cookie}`,
+// 			},
+// 		});
 
-		// if user is logged in, redirect to home page
-		return {
-			redirect: {
-				permanent: false,
-				destination: "/",
-			},
-		};
-	} catch {
-		// if user is not logged in, continue loading log in page
-		return {
-			props: {},
-		};
-	}
-};
+// 		// if user is logged in, redirect to home page
+// 		return {
+// 			redirect: {
+// 				permanent: false,
+// 				destination: "/",
+// 			},
+// 		};
+// 	} catch {
+// 		// if user is not logged in, continue loading log in page
+// 		return {
+// 			props: {},
+// 		};
+// 	}
+// };
 
 type Values = {
 	username: string;
@@ -69,6 +69,30 @@ const Login: NextPage = () => {
 		onSubmit: () => {
 			handleSubmit();
 		},
+	});
+
+	useEffect(() => {
+		const checkAuth = async () => {
+			try {
+				const response = await axios.get(
+					process.env.NEXT_PUBLIC_SERVER_URL! + "/account/user",
+					{
+						withCredentials: true,
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+
+				// return user's name if jwt auth is successful
+				Router.push("/");
+			} catch {
+				// redirect to log in page if jwt auth is unsuccessful
+				return;
+			}
+		};
+
+		checkAuth();
 	});
 
 	// send api a post request to log in
