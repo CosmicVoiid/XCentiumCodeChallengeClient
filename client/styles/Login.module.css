@@ -59,6 +59,7 @@
 
 .btn:disabled {
   background-color: grey;
+  cursor: default;
 }
   
 .errorMessage {
